@@ -10,15 +10,14 @@ def iniciar(pentago):
     jogada = input()
     pentago.jogar(jogada)
 
-  print(pentago)
-  
-  if (pentago.empatou):
-    print("Houve empate!")
-  elif (pentago.branco_venceu):
-    print("O branco ganhou!")
-  else:
-    print("O preto ganhou!")
+    print(pentago)
 
+    if (pentago.empatou):
+        print("Houve empate!")
+    elif (pentago.branco_venceu):
+        print("O branco ganhou!")
+    else:
+        print("O preto ganhou!")
 
 print("Movimento: B/P BD")
 print("B: Qual bloco será escolhido (1-4)")

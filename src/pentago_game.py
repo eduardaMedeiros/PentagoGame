@@ -207,7 +207,7 @@ class Pentago:
                         val = self.pegar_jogador_posicao(j, i + k)
                         texto.append(val) if val != None else texto.append(". ")
                 
-                texto.append(" |\n")
+                texto.append("|\n")
             
             texto.append(comeco)
         return ''.join(texto)
