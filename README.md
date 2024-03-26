@@ -1,2 +1,2 @@
-# PentagoGame
-Implementação do jogo de tabuleiro com minimax
+# Pentago Game
+Pentago é um jogo de estratégia para dois jogadores. O tabuleiro consiste em quatro subtabuleiros 3x3 que podem ser girados. Os jogadores se revezam colocando esferas de sua cor em qualquer subtabuleiro. O objetivo é alinhar cinco esferas de sua cor, verticalmente, horizontalmente ou diagonalmente, considerando que a rotação dos subtabuleiros pode alterar drasticamente o estado do jogo.
