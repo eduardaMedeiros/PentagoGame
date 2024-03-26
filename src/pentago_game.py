@@ -32,9 +32,9 @@ class Pentago:
         direcao_rotacao = parametros[2][1]
 
         if self.primeira_jogada_turno:
-            jogador = "◽"
+            jogador = "⚪"
         else:
-            jogador = "◾"
+            jogador = "⚫"
 
         if self.blocos[bloco][posicao] != None and direcao_rotacao.upper() != "l" and direcao_rotacao.upper() != "r":
             print("Movimento inválido")
@@ -97,12 +97,12 @@ class Pentago:
             pretas = 0
             for c in range(6):
                 bloco, posicao = convert(r, c)
-                if (self.blocos[bloco][posicao] == "◽"):
+                if (self.blocos[bloco][posicao] == "⚪"):
                     if ((r == 1 or r == 4) and (c == 1 or c == 4)):
                         brancas_meio += 1
                     brancas += 1
                     pretas = 0
-                elif (self.blocos[bloco][posicao] == "◾"):
+                elif (self.blocos[bloco][posicao] == "⚫"):
                     if ((r == 1 or r == 4) and (c == 1 or c == 4)):
                         pretas_meio += 1
                     pretas += 1
@@ -120,10 +120,10 @@ class Pentago:
             pretas = 0
             for r in range(6):
                 bloco, posicao = convert(r, c)
-                if (self.blocos[bloco][posicao] == "◽"):
+                if (self.blocos[bloco][posicao] == "⚪"):
                     brancas += 1
                     pretas = 0
-                elif (self.blocos[bloco][posicao] == "◾"):
+                elif (self.blocos[bloco][posicao] == "⚫"):
                     pretas += 1
                     brancas = 0
                 else:
@@ -141,10 +141,10 @@ class Pentago:
 
                 for j in range(6 - i):
                     bloco, posicao = convert(j + i, j) if d == 0 else convert(j, j + i)
-                    if (self.blocos[bloco][posicao] == "◽"):
+                    if (self.blocos[bloco][posicao] == "⚪"):
                         brancas += 1
                         pretas = 0
-                    elif (self.blocos[bloco][posicao] == "◾"):
+                    elif (self.blocos[bloco][posicao] == "⚫"):
                         pretas += 1
                         brancas = 0
                     else:
@@ -162,10 +162,10 @@ class Pentago:
 
                 for j in range(6 - i):
                     bloco, posicao = convert(5 - (j + i), j) if d == 0 else convert(5 - j, j + i)
-                    if (self.blocos[bloco][posicao] == "◽"):
+                    if (self.blocos[bloco][posicao] == "⚪"):
                         brancas += 1
                         pretas = 0
-                    elif (self.blocos[bloco][posicao] == "◾"):
+                    elif (self.blocos[bloco][posicao] == "⚫"):
                         pretas += 1
                         brancas = 0
                     else:
@@ -205,9 +205,9 @@ class Pentago:
                     texto.append("| ")
                     for k in range(3):
                         val = self.pegar_jogador_posicao(j, i + k)
-                        texto.append(val + " ") if val != None else texto.append(". ")
+                        texto.append(val) if val != None else texto.append(". ")
                 
-                texto.append("|\n")
+                texto.append(" |\n")
             
             texto.append(comeco)
         return ''.join(texto)

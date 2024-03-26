@@ -4,7 +4,7 @@ def iniciar(pentago):
   while (not pentago.venceu and not pentago.empatou):
     print(pentago)
 
-    player = "Jogador 1 (◽)" if pentago.primeira_jogada_turno else "Jogador 2 (◾)"
+    player = "Jogador 1 (⚪)" if pentago.primeira_jogada_turno else "Jogador 2 (⚫)"
     print(player, ": Escolha seu movimento <B/P BD>:", end="")
     
     jogada = input()
