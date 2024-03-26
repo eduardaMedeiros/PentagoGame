@@ -1,4 +1,4 @@
-import re
+import re, copy
 
 class Pentago:
     def __init__(self):
@@ -31,12 +31,12 @@ class Pentago:
         bloco_rotacao = int(parametros[2][0]) - 1
         direcao_rotacao = parametros[2][1]
 
-        if self.primeira_jogada_turno:
+        if (self.primeira_jogada_turno):
             jogador = "⚪"
         else:
             jogador = "⚫"
 
-        if self.blocos[bloco][posicao] != None and direcao_rotacao.upper() != "l" and direcao_rotacao.upper() != "r":
+        if (self.blocos[bloco][posicao] != None and direcao_rotacao.upper() != "l" and direcao_rotacao.upper() != "r"):
             print("Movimento inválido")
         else:
             self.blocos[bloco][posicao] = jogador
@@ -46,7 +46,7 @@ class Pentago:
             
             for linha in range(3):
                 for coluna in range(3):
-                    if direcao_rotacao.upper() == "l":
+                    if (direcao_rotacao.upper() == "l"):
                         temp[convert(2 - coluna, linha)] = self.blocos[bloco_rotacao][convert(linha, coluna)] 
                     else:
                         temp[convert(coluna, 2 -linha)] = self.blocos[bloco_rotacao][convert(linha, coluna)]
@@ -55,7 +55,7 @@ class Pentago:
             self.verifica_ganhador()
             self.primeira_jogada_turno = not self.primeira_jogada_turno
 
-    def jogadas_potenciais(self):
+    def jogadas_possiveis(self):
         jogadas = []
 
         for bloco in range(4):
@@ -97,12 +97,12 @@ class Pentago:
             pretas = 0
             for c in range(6):
                 bloco, posicao = convert(r, c)
-                if (self.blocos[bloco][posicao] == "⚪"):
+                if (self.blocos[bloco][posicao] == '⚪'):
                     if ((r == 1 or r == 4) and (c == 1 or c == 4)):
                         brancas_meio += 1
                     brancas += 1
                     pretas = 0
-                elif (self.blocos[bloco][posicao] == "⚫"):
+                elif (self.blocos[bloco][posicao] == '⚫'):
                     if ((r == 1 or r == 4) and (c == 1 or c == 4)):
                         pretas_meio += 1
                     pretas += 1
@@ -120,10 +120,10 @@ class Pentago:
             pretas = 0
             for r in range(6):
                 bloco, posicao = convert(r, c)
-                if (self.blocos[bloco][posicao] == "⚪"):
+                if (self.blocos[bloco][posicao] == '⚪'):
                     brancas += 1
                     pretas = 0
-                elif (self.blocos[bloco][posicao] == "⚫"):
+                elif (self.blocos[bloco][posicao] == '⚫'):
                     pretas += 1
                     brancas = 0
                 else:
@@ -141,10 +141,10 @@ class Pentago:
 
                 for j in range(6 - i):
                     bloco, posicao = convert(j + i, j) if d == 0 else convert(j, j + i)
-                    if (self.blocos[bloco][posicao] == "⚪"):
+                    if (self.blocos[bloco][posicao] == '⚪'):
                         brancas += 1
                         pretas = 0
-                    elif (self.blocos[bloco][posicao] == "⚫"):
+                    elif (self.blocos[bloco][posicao] == '⚫'):
                         pretas += 1
                         brancas = 0
                     else:
@@ -162,10 +162,10 @@ class Pentago:
 
                 for j in range(6 - i):
                     bloco, posicao = convert(5 - (j + i), j) if d == 0 else convert(5 - j, j + i)
-                    if (self.blocos[bloco][posicao] == "⚪"):
+                    if (self.blocos[bloco][posicao] == '⚪'):
                         brancas += 1
                         pretas = 0
-                    elif (self.blocos[bloco][posicao] == "⚫"):
+                    elif (self.blocos[bloco][posicao] == '⚫'):
                         pretas += 1
                         brancas = 0
                     else:
@@ -181,15 +181,15 @@ class Pentago:
     def verifica_ganhador(self):
         branco, preto = self.calcula_utilidade()
 
-        if branco == self.utilidade_ganhador:
+        if (branco == self.utilidade_ganhador):
             self.branco_venceu = True
         
-        if preto == self.utilidade_ganhador:
+        if (preto == self.utilidade_ganhador):
             self.preto_venceu = True
         
-        if self.branco_venceu and self.preto_venceu:
+        if (self.branco_venceu and self.preto_venceu):
             self.empatou = True
-        elif self.branco_venceu or self.preto_venceu:
+        elif (self.branco_venceu or self.preto_venceu):
             self.venceu = True
 
     def pegar_jogador_posicao(self, bloco, posicao):
@@ -197,21 +197,23 @@ class Pentago:
     
     def __str__(self):
         comeco = "+-------+-------+\n"
-        texto = [comeco]
+        texto = comeco
 
-        for bloco in range(2, 5, 2) :
-            for i in range(0, 7, 3) :
-                for j in range (bloco - 2, bloco):
+        for bloco in range(2, 5, 2):
+            for i in range(0, 7, 3):
+                for j in range(bloco - 2, bloco):
                     texto.append("| ")
                     for k in range(3):
                         val = self.pegar_jogador_posicao(j, i + k)
                         texto.append(val) if val != None else texto.append(". ")
-                
+
                 texto.append("|\n")
-            
-            texto.append(comeco)
+
+        texto.append(comeco)
         return ''.join(texto)
 
+    def copy(self):
+        return copy.deepcopy(self)
 
         
 
