@@ -12,26 +12,26 @@ Durante cada jogada, o jogador deve inserir suas ações no formato "b/p bd" (se
 "b/p" define o bloco e a localização dentro desse bloco, "bd" define um bloco e a direção para rotacioná-lo.
 
 b: o bloco escolhido, de 1 a 4
-    +-------+-------+
-    |       |       |
-    |   1   |   2   |
-    |       |       |
-    +-------+-------+
-    |       |       |
-    |   3   |   4   |
-    |       |       |
-    +-------+-------+
+        +-------+-------+
+        |       |       |
+        |   1   |   2   |
+        |       |       |
+        +-------+-------+
+        |       |       |
+        |   3   |   4   |
+        |       |       |
+        +-------+-------+
 
 p: a localização escolhida dentro do bloco, de 1 a 9.
-    +-------+-------+
-    | 1 2 3 | 1 2 3 |
-    | 4 5 6 | 4 5 6 |
-    | 7 8 9 | 7 8 9 |
-    +-------+-------+
-    | 1 2 3 | 1 2 3 |
-    | 4 5 6 | 4 5 6 |
-    | 7 8 9 | 7 8 9 |
-    +-------+-------+
+        +-------+-------+
+        | 1 2 3 | 1 2 3 |
+        | 4 5 6 | 4 5 6 |
+        | 7 8 9 | 7 8 9 |
+        +-------+-------+
+        | 1 2 3 | 1 2 3 |
+        | 4 5 6 | 4 5 6 |
+        | 7 8 9 | 7 8 9 |
+        +-------+-------+
 
 d: a direção para rotacionar o bloco b
 
