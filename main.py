@@ -9,17 +9,19 @@ def iniciar(pentago, tipo):
     pentago_ia = ia.IA(tipo)
     
     while (not pentago.venceu and not pentago.empatou):
-        
         print(pentago)
-        player = "Jogador 1 (⚪)" if pentago.primeira_jogada_turno else "Jogador 2 (⚫)"
+        player = "Jogador 1 (" + '\033[37m' + '●' + '\033[0m' + ")" if pentago.primeira_jogada_turno else "Jogador 2 (" + '\033[30m' + '●' + '\033[0m' + ")"
 
         if((ordem[0] == "IA" and pentago.primeira_jogada_turno) or (ordem[1] == "IA" and not pentago.primeira_jogada_turno)):
             print("IA pensativa...")
             print(player, ": IA :", pentago_ia.jogar(pentago))
         else:
-            print(player, ": Escolha seu movimento <B/P BD>: ", end="")
+            print(player, ": Escolha seu movimento <B/P BD>: ")
             jogada = input()
-            pentago.jogar(jogada)
+            
+            valido = pentago.validar_jogada(jogada)
+            if valido:
+                pentago.jogar(jogada)
 
     print(pentago)
     if (pentago.empatou):

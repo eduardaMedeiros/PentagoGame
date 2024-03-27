@@ -105,17 +105,17 @@ class IA:
         alpha_beta_auxiliar(self, jogo, profundidade_max, profundidade, float("-inf"), float("inf"), melhores_jogadas)
         return melhores_jogadas[0]
     
-    def jogar(self, jogo, profundidade_max = 1):
+    def jogar(self, jogo, profundidade_max = 2):
         self.nos_expandidos = 0
         self.profundidade_expandida = 0
 
         jogada = self.algortimo(jogo, profundidade_max)
         jogo.jogar(jogada)
 
-        print("\nNós expandidos:", self.nos_expandidos)
-        print("Profundidade expandida:", self.profundidade_expandida)
+        print("Nós expandidos:", self.nos_expandidos)
+        print("Profundidade expandida:", self.profundidade_expandida, "\n")
 
         self.visitado.clear()
-        return jogada
+        return jogada 
 
             
