@@ -70,8 +70,6 @@ class Pentago:
         return True
 
     def jogar(self, jogada):
-        self.verifica_ganhador()
-
         def convert(linha, coluna):
             return linha * 3 + coluna
         
