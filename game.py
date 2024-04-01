@@ -93,7 +93,7 @@ class Pentago:
             
         for linha in range(3):
             for coluna in range(3):
-                if (direcao_rotacao.upper() == "l"):
+                if (direcao_rotacao in ("L", "l")):
                     temp[convert(2 - coluna, linha)] = self.blocos[bloco_rotacao][convert(linha, coluna)] 
                 else:
                     temp[convert(coluna, 2 -linha)] = self.blocos[bloco_rotacao][convert(linha, coluna)]
@@ -139,7 +139,6 @@ class Pentago:
 
             return bloco, posicao
 
-  
         for r in range(6):
             for c in range(6):
                 bloco, posicao = convert(r, c)
