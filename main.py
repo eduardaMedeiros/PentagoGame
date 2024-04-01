@@ -16,7 +16,7 @@ def iniciar(pentago, tipo):
             print("IA pensativa...")
             print(player, ": IA :", pentago_ia.jogar(pentago))
         else:
-            print(player, ": Escolha seu movimento <B/P BD>: ")
+            print(player, ": Escolha seu movimento <B/P BD>: ", end="")
             jogada = input()
             
             valido = pentago.validar_jogada(jogada)
@@ -30,6 +30,7 @@ def iniciar(pentago, tipo):
         print("O branco ganhou!")
     else:
         print("O preto ganhou!")
+
 
 print("0 - Minimax")
 print("1 - Alpha Beta")

@@ -19,10 +19,10 @@ class IA:
 
             if(profundidade >= profundidade_max):
                 return jogo.utilidades()
-            elif(jogo.utilidade() == jogo.utilidade_ganhador):
-                return jogo.utilidade_ganhador
-            elif(jogo.utilidade() == jogo.utilidade_perdedor):
-                return jogo.utilidade_perdedor
+            elif(jogo.utilidade() == jogo.utilidade_max):
+                return jogo.utilidade_max
+            elif(jogo.utilidade() == jogo.utilidade_min):
+                return jogo.utilidade_min
             else:
                 jogadas_possiveis = jogo.jogadas_possiveis()
 
@@ -49,7 +49,7 @@ class IA:
                         melhor_utilidade = proximo_utilidade
                     
                 melhores_jogadas[0] = melhor_jogada
-                return int(melhor_utilidade)
+                return melhor_utilidade
             
         minimax_auxiliar(self, jogo, profundidade_max, profundidade, melhores_jogadas)
         return melhores_jogadas[0]
@@ -62,10 +62,10 @@ class IA:
 
             if(profundidade >= profundidade_max):
                 return jogo.utilidades()
-            elif(jogo.utilidade() == jogo.utilidade_ganhador):
-                return jogo.utilidade_ganhador
-            elif(jogo.utilidade() == jogo.utilidade_perdedor):
-                return jogo.utilidade_perdedor
+            elif(jogo.utilidade() == jogo.utilidade_max):
+                return jogo.utilidade_max
+            elif(jogo.utilidade() == jogo.utilidade_min):
+                return jogo.utilidade_min
             else:
                 jogadas_possiveis = jogo.jogadas_possiveis()
 
@@ -100,7 +100,7 @@ class IA:
                         break
                     
                 melhores_jogadas[0] = melhor_jogada
-                return int(melhor_utilidade)
+                return melhor_utilidade
         
         alpha_beta_auxiliar(self, jogo, profundidade_max, profundidade, float("-inf"), float("inf"), melhores_jogadas)
         return melhores_jogadas[0]

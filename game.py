@@ -8,8 +8,8 @@ class Pentago:
         self.branco_venceu = False
         self.preto_venceu = False
 
-        self.utilidade_ganhador = 1000
-        self.utilidade_perdedor = -1000
+        self.utilidade_max = 1000
+        self.utilidade_min = -1000
 
         self.venceu = False
         self.empatou = False
@@ -23,12 +23,13 @@ class Pentago:
             self.blocos.append(posicoes)
 
     def verifica_ganhador(self):
-        branco, preto = self.calcula_utilidade()
+        branco = self.calcular_utilidade(BOLA_BRANCA, BOLA_PRETA)
+        preto = -self.calcular_utilidade(BOLA_PRETA, BOLA_BRANCA)
 
-        if (branco == self.utilidade_ganhador):
+        if (branco == self.utilidade_max):
             self.branco_venceu = True
         
-        if (preto == self.utilidade_perdedor):
+        if (preto == self.utilidade_min):
             self.preto_venceu = True
         
         if (self.branco_venceu and self.preto_venceu):
@@ -115,116 +116,94 @@ class Pentago:
         return jogadas
     
     def utilidade(self):
-        branca, preta = self.calcula_utilidade()
-        return branca if self.primeira_jogada_turno else preta
+        branco = self.calcular_utilidade(BOLA_BRANCA, BOLA_PRETA)
+        preto = -self.calcular_utilidade(BOLA_PRETA, BOLA_BRANCA)
+
+        return branco if self.primeira_jogada_turno else preto
     
     def utilidades(self):
-        branca, preta = self.calcula_utilidade()
-        return branca + preta
+        branco = self.calcular_utilidade(BOLA_BRANCA, BOLA_PRETA)
+        preto = -self.calcular_utilidade(BOLA_PRETA, BOLA_BRANCA)
+        
+        return branco + preto
     
-    def calcula_utilidade(self):
+    def pegar_linhas(self):
+        lista = []
+
         def convert(linha, coluna):
             def convert_inner(linha, coluna):
                 return linha * 3 + coluna
 
             posicao = convert_inner(linha % 3, coluna % 3)
-            bloco = 2 * int(coluna / 3) + int(linha / 3)
+            bloco = 2 * int(linha / 3) + int(coluna / 3) 
 
             return bloco, posicao
-        
-        qtd_brancas = 0
-        qtd_pretas = 0
 
-        brancas_meio = 0
-        pretas_meio = 0
-
-        #horizontal
+  
         for r in range(6):
-            brancas = 0
-            pretas = 0
             for c in range(6):
                 bloco, posicao = convert(r, c)
-                if (self.blocos[bloco][posicao] == BOLA_BRANCA):
-                    if ((r == 1 or r == 4) and (c == 1 or c == 4)):
-                        brancas_meio += 1
-                    brancas += 1
-                    pretas = 0
-                elif (self.blocos[bloco][posicao] == BOLA_PRETA):
-                    if ((r == 1 or r == 4) and (c == 1 or c == 4)):
-                        pretas_meio += 1
-                    pretas += 1
-                    brancas = 0
-                else:
-                    brancas = 0
-                    pretas = 0
+                lista.append(self.blocos[bloco][posicao])
+      
+        matrix = [lista[i * 6:(i + 1) * 6] for i in range(6)]
+        linhas = matrix + list(map(list, zip(*matrix)))
 
-            qtd_brancas = max(qtd_brancas, brancas)
-            qtd_pretas = max(qtd_pretas, pretas)
+        linhas.append([matrix[i][i] for i in range(6)])
+        linhas.append([matrix[i + 1][i] for i in range(5)])
+        linhas.append([matrix[i][i + 1] for i in range(5)])
+        linhas.append([matrix[i][5 - i] for i in range(6)])
+        linhas.append([matrix[i + 1][5 - i] for i in range(5)])
+        linhas.append([matrix[i][4 - i] for i in range(5)])
 
-        #vertical
-        for c in range(6):
-            brancas = 0
-            pretas = 0
-            for r in range(6):
-                bloco, posicao = convert(r, c)
-                if (self.blocos[bloco][posicao] == BOLA_BRANCA):
-                    brancas += 1
-                    pretas = 0
-                elif (self.blocos[bloco][posicao] == BOLA_PRETA):
-                    pretas += 1
-                    brancas = 0
-                else:
-                    brancas = 0
-                    pretas = 0
+        return linhas
+    
+    def verificar_sequencia(self, linha, jogador, tamanho):
+        string = ''.join(map(str, linha))
+        sequencia = jogador * tamanho
+        return sequencia in string
+    
+    def calcular_utilidade(self, max, min):
+        linhas = self.pegar_linhas()
 
-            qtd_brancas = max(qtd_brancas, brancas)
-            qtd_pretas = max(qtd_pretas, pretas)
+        utilidade = 0
+        scores = [1, 10, 100]
 
-        #diagonal
-        for d in range(2):
-            for i in range(6):
-                brancas = 0
-                pretas = 0
-
-                for j in range(6 - i):
-                    bloco, posicao = convert(j + i, j) if d == 0 else convert(j, j + i)
-                    if (self.blocos[bloco][posicao] == BOLA_BRANCA):
-                        brancas += 1
-                        pretas = 0
-                    elif (self.blocos[bloco][posicao] == BOLA_PRETA):
-                        pretas += 1
-                        brancas = 0
-                    else:
-                        brancas = 0
-                        pretas = 0
-
-                    qtd_brancas = max(qtd_brancas, brancas)
-                    qtd_pretas = max(qtd_pretas, pretas)
+        for linha in linhas:
+            if self.verificar_sequencia(linha, max, 5):
+                return self.utilidade_max
         
-        #canto esquerdo e direito
-        for d in range(2):
-            for i in range(6):
-                brancas = 0
-                pretas = 0
-
-                for j in range(6 - i):
-                    bloco, posicao = convert(5 - (j + i), j) if d == 0 else convert(5 - j, j + i)
-                    if (self.blocos[bloco][posicao] == BOLA_BRANCA):
-                        brancas += 1
-                        pretas = 0
-                    elif (self.blocos[bloco][posicao] == BOLA_PRETA):
-                        pretas += 1
-                        brancas = 0
-                    else:
-                        brancas = 0
-                        pretas = 0
-
-                    qtd_brancas = max(qtd_brancas, brancas)
-                    qtd_pretas = max(qtd_pretas, pretas)
+            if self.verificar_sequencia(linha, min, 5):
+                return self.utilidade_min
         
-        return qtd_brancas * 5 + brancas_meio if (qtd_brancas < 5) else self.utilidade_ganhador, \
-               -qtd_pretas * 5 - pretas_meio if  (qtd_pretas < 5) else self.utilidade_perdedor
-
+        for linha in linhas:
+            if self.verificar_sequencia(linha, max, 4):
+                utilidade += scores[2]
+                pass
+            elif self.verificar_sequencia(linha, max, 3):
+                utilidade += scores[1]
+                pass
+            elif self.verificar_sequencia(linha, max, 2):
+                utilidade += scores[0]
+            
+        for linha in linhas:
+            if self.verificar_sequencia(linha, min, 4):
+                utilidade -= scores[2]
+                pass
+            elif self.verificar_sequencia(linha, min, 3):
+                utilidade -= scores[1]
+                pass
+            elif self.verificar_sequencia(linha, min, 2):
+                utilidade -= scores[0]
+    
+        if utilidade == 0:
+            for i in range(4):
+                if self.blocos[i][4] == max:
+                    utilidade += 2
+                if self.blocos[i][4] == min:
+                    utilidade -= 2
+     
+        return utilidade
+        
     def pegar_jogador_posicao(self, bloco, posicao):
         return self.blocos[bloco][posicao]
     
