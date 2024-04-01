@@ -11,11 +11,13 @@ Durante cada jogada, o jogador deve inserir suas ações no formato "b/p bd" (se
 
 "b/p" define o bloco e a localização dentro desse bloco, "bd" define um bloco e a direção para rotacioná-lo.
 
-b: o bloco escolhido, de 1 a 4
+b: o bloco escolhido, de 1 a 4.
+
 <img src="resources/img-blocos.png" alt="Numeração dos Blocos">
 
 p: a localização escolhida dentro do bloco, de 1 a 9.
-<img src="resources/img-blocos.png" alt="Posições dos Blocos">
+
+<img src="resources/img-posicoes.png" alt="Posições dos Blocos">
 
 d: a direção para rotacionar o bloco b
 
